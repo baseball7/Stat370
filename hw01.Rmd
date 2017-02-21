@@ -45,6 +45,22 @@ lines(x,y2)
 plot(x,y,'l',ylim=c(-100,100))
 lines(x,y2)
 
+y3<-quad(x,0,1,2)
+plot(x,y,'l')
+lines(x,y3)
+
+y4<-quad(x,1,0,2)
+plot(x,y,'l')
+lines(x,y4)
+
+y5<-quad(x,1,2,0)
+plot(x,y,'l')
+lines(x,y5)
+
+y6<-quad(2,0,0)
+plot(x,y,'l')
+lines(x,y6)
+
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

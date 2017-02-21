@@ -1,8 +1,10 @@
 name: "my-website"
 navbar:
-  title: "My Website"
-left:
-  - text: "Home"
-href: index.html
-- text: "About"
-href: about.html
+  title: "My Website for STAT370"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "About"
+      href: about.html
+    - text: "Homework 1"
+      href: hw01.html
