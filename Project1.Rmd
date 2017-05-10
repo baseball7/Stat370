@@ -1,0 +1,68 @@
+---
+title: "Project1"
+output: html_document
+---
+
+```{r}
+require(rworldmap)
+library(rworldmap)
+joinCountryData2Map(countryExData)
+data(countryExData)
+countryExData[5:10,1:5]
+sPDF<-joinCountryData2Map(countryExData,joinCode = "ISO3", nameJoinColumn = "ISO3V10")
+par(mai=c(0,0,0.2,0),xaxs="i",yaxs="i")
+mapCountryData(sPDF,nameColumnToPlot = "BIODIVERSITY")
+
+par(mai=c(0,0,0.2,0),xaxs="i",yaxs="i")
+cutVector <- quantile(sPDF@data[["BIODIVERSITY"]], na.rm = TRUE)
+sPDF@data[["BIOcat"]]<-cut(sPDF@data[["BIODIVERSITY"]], cutVector, include.lowest = TRUE)
+levels(sPDF@data[["BIOcat"]]) <-c('low','med','high','vhigh')
+mapCountryData(sPDF,nameColumnToPlot = 'BIOcat', catMethod = 'categorical', mapTitle = 'Biodiversity in Europe', colourPalette = 'topo', mapRegion = 'Eurasia')
+
+par(mai=c(0,0,0.2,0),xaxs="i",yaxs="i")
+mapCountryData(sPDF,nameColumnToPlot = "CO2KWH_pt", mapTitle='Carbon Dioxide Emissions')
+mapCountryData(sPDF,nameColumnToPlot = "GDP_capita.MRYA", mapTitle = 'GDP per capita')
+
+sPDF<-getMap()
+sPDF<-sPDF[which(sPDF$REGION=='South America'),]
+mapCountryData(sPDF,nameColumnToPlot = 'continent',colourPalette = 'rainbow',mapTitle = 'South America')
+par(mai=c(0,0,0.2,0),xaxs="i",yaxs="i")
+mapCountryData(sPDF,nameColumnToPlot = 'POP_EST',colourPalette = 'rainbow',mapTitle = 'South America Population Density', mapRegion = 'latin america')
+
+par(mai=c(0,0,0.2,0),xaxs="i", yaxs="i")
+data(gridExData)
+mapGriddedData(gridExData)
+sternEnvHealth <- country2Region(inFile = countryExData, nameDataColumn = "ENVHEALTH", joinCode = "ISO3", nameJoinColumn = "ISO3V10", regionType = "Stern",FUN="mean")
+print(sternEnvHealth)
+par(mai=c(0,0,0.2,0),xaxs="i",yaxs="i")
+mapByRegion(countryExData,nameDataColumn = "CLIMATE",joinCode = "ISO3",nameJoinColumn = "ISO3V10",regionType = "Stern",FUN="mean")
+par(mai=c(0,0,0.2,0), xaxs="i",yaxs="i")
+sPDF<-getMap()
+sPDF<- sPDF[which(sPDF$LDC=='LDC'),]
+mapCountryData(sPDF,nameColumnToPlot = 'continent',colourPalette = 'rainbow',mapTitle='Least Developed Countries')
+par(mai=c(0,0,0.2,0), xaxs="i",yaxs="i")
+mapBubbles(dF=getMap(),nameZSize = "POP_EST",nameZColour = "continent",colourPalette = 'rainbow',oceanCol = 'lightblue',landCol='wheat')
+
+
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r }
+
+
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
