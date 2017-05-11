@@ -1,68 +1,104 @@
 ---
-title: "Final Project"
+title: "STAT 370 Final Project"
 output: html_document
 ---
+Parvin Siva
 
-```{r}
+```{r, echo=FALSE}
 require(rworldmap)
 library(rworldmap)
 joinCountryData2Map(countryExData)
 data(countryExData)
 countryExData[5:10,1:5]
 sPDF<-joinCountryData2Map(countryExData,joinCode = "ISO3", nameJoinColumn = "ISO3V10")
+```
+
+##Biodiversity
+This map shows the biodiversity of 218 countries and territories
+```{r someVar, echo=FALSE}
 par(mai=c(0,0,0.2,0),xaxs="i",yaxs="i")
 mapCountryData(sPDF,nameColumnToPlot = "BIODIVERSITY")
+```
 
-par(mai=c(0,0,0.2,0),xaxs="i",yaxs="i")
-cutVector <- quantile(sPDF@data[["BIODIVERSITY"]], na.rm = TRUE)
-sPDF@data[["BIOcat"]]<-cut(sPDF@data[["BIODIVERSITY"]], cutVector, include.lowest = TRUE)
-levels(sPDF@data[["BIOcat"]]) <-c('low','med','high','vhigh')
-mapCountryData(sPDF,nameColumnToPlot = 'BIOcat', catMethod = 'categorical', mapTitle = 'Biodiversity in Europe', colourPalette = 'topo', mapRegion = 'Eurasia')
-
-par(mai=c(0,0,0.2,0),xaxs="i",yaxs="i")
-mapCountryData(sPDF,nameColumnToPlot = "CO2KWH_pt", mapTitle='Carbon Dioxide Emissions')
-mapCountryData(sPDF,nameColumnToPlot = "GDP_capita.MRYA", mapTitle = 'GDP per capita')
-
-sPDF<-getMap()
-sPDF<-sPDF[which(sPDF$REGION=='South America'),]
-mapCountryData(sPDF,nameColumnToPlot = 'continent',colourPalette = 'rainbow',mapTitle = 'South America')
-par(mai=c(0,0,0.2,0),xaxs="i",yaxs="i")
-mapCountryData(sPDF,nameColumnToPlot = 'POP_EST',colourPalette = 'rainbow',mapTitle = 'South America Population Density', mapRegion = 'latin america')
+##Detailed Biodiversity
+This map shows biodiversity as measure by indivual longtitudes and latitudes, instead of by country as seen in the previous map. 
+```{r, echo=FALSE}
 
 par(mai=c(0,0,0.2,0),xaxs="i", yaxs="i")
 data(gridExData)
 mapGriddedData(gridExData)
 sternEnvHealth <- country2Region(inFile = countryExData, nameDataColumn = "ENVHEALTH", joinCode = "ISO3", nameJoinColumn = "ISO3V10", regionType = "Stern",FUN="mean")
 print(sternEnvHealth)
+```
+#Biodiversity in Europe
+```{r, echo=FALSE}
+par(mai=c(0,0,0.2,0),xaxs="i",yaxs="i")
+cutVector <- quantile(sPDF@data[["BIODIVERSITY"]], na.rm = TRUE)
+sPDF@data[["BIOcat"]]<-cut(sPDF@data[["BIODIVERSITY"]], cutVector, include.lowest = TRUE)
+levels(sPDF@data[["BIOcat"]]) <-c('low','med','high','vhigh')
+mapCountryData(sPDF,nameColumnToPlot = 'BIOcat', catMethod = 'categorical', mapTitle = 'Biodiversity in Europe', colourPalette = 'topo', mapRegion = 'Eurasia')
+```
+Countries where no data was collected are in white. 
+
+##Carbon Dioxide Emissions
+This map shows the total carbon dioxide emissions per person accross the world
+```{r,echo=FALSE }
+par(mai=c(0,0,0.2,0),xaxs="i",yaxs="i")
+mapCountryData(sPDF,nameColumnToPlot = "CO2KWH_pt", mapTitle='Carbon Dioxide Emissions')
+```
+
+##GDP per capita
+This map shows the Gross Domestic Product per person around the world 
+```{r,echo=FALSE }
+mapCountryData(sPDF,nameColumnToPlot = "GDP_capita.MRYA", mapTitle = 'GDP per capita')
+```
+
+##South America zoomed in 
+Next we zoom into South America to take a closer look
+```{r }
+sPDF<-getMap()
+sPDF<-sPDF[which(sPDF$REGION=='South America'),]
+mapCountryData(sPDF,nameColumnToPlot = 'continent',colourPalette = 'rainbow',mapTitle = 'South America')
+```
+
+##Population Density in South America
+This map shows us up close of South America's population density by country
+```{r,echo=FALSE }
+par(mai=c(0,0,0.2,0),xaxs="i",yaxs="i")
+mapCountryData(sPDF,nameColumnToPlot = 'POP_EST',colourPalette = 'rainbow',mapTitle = 'South America Population Density', mapRegion = 'latin america')
+```
+
+##Stern Review on the Economics of Climate Change
+This map shows the economic cost of climate change on individual 
+
+
+```{r, echo=FALSE}
 par(mai=c(0,0,0.2,0),xaxs="i",yaxs="i")
 mapByRegion(countryExData,nameDataColumn = "CLIMATE",joinCode = "ISO3",nameJoinColumn = "ISO3V10",regionType = "Stern",FUN="mean")
+```
+
+##Least Developed Countries
+This map shows what the UN classifies as Least Developed Countries
+```{r, echo=FALSE}
 par(mai=c(0,0,0.2,0), xaxs="i",yaxs="i")
 sPDF<-getMap()
 sPDF<- sPDF[which(sPDF$LDC=='LDC'),]
 mapCountryData(sPDF,nameColumnToPlot = 'continent',colourPalette = 'rainbow',mapTitle='Least Developed Countries')
+```
+
+##Population Estimates
+This map shows estimates of population size.
+```{r, echo=FALSE}
 par(mai=c(0,0,0.2,0), xaxs="i",yaxs="i")
 mapBubbles(dF=getMap(),nameZSize = "POP_EST",nameZColour = "continent",colourPalette = 'rainbow',oceanCol = 'lightblue',landCol='wheat')
 
 
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r }
-
-
+##Correlation
+Here we first look at the relationship between biodiversity and GDP per capital, and there appears to be no relationship. 
+Next we look at carbon dixoide emissions per person and GDP per capita, and there appears to be no significant correlation as well.
+```{r, echo=FALSE}
+plot(countryExData$BIODIVERSITY, countryExData$GDP_capita.MYRA , xlab="Biodiversity",   ylab="GDP per Capita")  
+plot(countryExData$CO2KWH_pt, countryExData$GDP_capita.MYRA , xlab="CO2 Levels",   ylab="GDP per Capita")  
 ```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
