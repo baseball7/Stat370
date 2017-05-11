@@ -1,0 +1,64 @@
+---
+title: "homework3"
+output: html_document
+---
+Parvin Siva
+
+
+
+## Loops and Conditionals
+
+This assignment looks at the functions “rnorm()” and “dnorm()”. The first gives a random number with Normal distribution and the second gives the probability density function (whose graph is the density curve) for the Normal distribution (i.e. a perfect bell curve).
+These will implement the Normal distribution with the important difference that it will be impossible for the random variable to be a negative number—when a negative number appears, new random numbers are chosen, until a positive one appears.
+
+##rmytnorm
+
+```{r someVar, echo=FALSE}
+rmytnorm <- function(n=1, m=0) {
+  v <- rep(NA, n)
+  for(i in 1:n) {
+    v[i] <- -1
+    while(v[i]<0) {
+      v[i] <- rnorm(1, mean=m)
+    }
+  }
+  return(v)
+  
+}
+dmytnorm <- function(x, m=0) {
+  v <- rep(NA, length(x))
+  for(i in 1:length(x)) {
+    
+  if(x[i]<0) {
+    v[i] <- 0
+  }else {
+    v[i] <- 2*dnorm(x[i], mean=m)
+  }
+  }
+  return(v)
+  }
+
+
+```
+
+```{r}
+
+
+y <- rmytnorm(1000,10)
+
+head(y)
+hist(y)
+
+```
+
+
+## dmytnorm
+
+
+
+```{r}
+x <- dmytnorm(-10:10,5)
+
+head(x)
+plot(x)
+```
