@@ -1,29 +1,30 @@
 ---
-title: "Hw01"
+title: "Homework 1"
 output: html_document
 ---
 
-```{r 
+Parvin Siva
 
-
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+## Quadratic Equations
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+This assignment looks at quadratic equations. A script was created with a function called "quad()" which implements the quadratic equation y=ax^2+bx+c where y is the return value and (x,a,b,c) are the arguments. 
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+Default values for a,b, and c were given. 
 
 ```{r cars}
 
 ```
 
-## Including Plots
+## a=1, b=1, c=0
 
-You can also embed plots, for example:
+When the parameter c=0, the output we get will be:
 
 ```{r pressure, echo=FALSE}
-plot(pressure)
+
 
 quad<-function(x,a=0,b=0,c=0){
   
@@ -33,34 +34,65 @@ quad<-function(x,a=0,b=0,c=0){
   
 }
 
-x <- seq(from=-10, to=10, by=.1)
-x
-
-quad(x,1,2,3)
-
-y<-quad(x,1,2,3)
-plot(x,y,'l')
-y2<-quad(x,-1,-2,3)
-lines(x,y2)
-plot(x,y,'l',ylim=c(-100,100))
-lines(x,y2)
-
-y3<-quad(x,0,1,2)
-plot(x,y,'l')
-lines(x,y3)
-
-y4<-quad(x,1,0,2)
-plot(x,y,'l')
-lines(x,y4)
-
-y5<-quad(x,1,2,0)
-plot(x,y,'l')
-lines(x,y5)
-
-y6<-quad(2,0,0)
-plot(x,y,'l')
-lines(x,y6)
+x <- seq(from=-10, to=10, by=.5)
+y <- quad(x,a=1,b=1)
+plot(x,y)
 
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+We can see that it is a non-linear equation, where b is the slope and c is the intercept. 
+
+## a=1, b=0, c=1
+
+```{r}
+
+
+x <- seq(from=-10, to=10, by=.5)
+y <- quad(x,a=1,c=1)
+plot(x,y)
+
+```
+
+When the parameter b=0, the graph looks like a quadratic function with a vertice of (0,0)
+
+##a=0, b=1, c=1
+
+```{r}
+
+x <- seq(from=-10, to=10, by=.5)
+y <- quad(x,b=1,c=1)
+plot(x,y)
+```
+
+When parameter a=0, we see a linear graph with a negative y intercept
+
+##a=0, b=0, c=1
+
+```{r}
+
+x <- seq(from=-10, to=10, by=.5)
+y <- quad(x,c=1)
+plot(x,y)
+```
+
+When parameters a and b are set to 0, we see a horizontal line with a y-intercept=1. 
+
+##a=0, b=1, c=0
+```{r}
+
+x <- seq(from=-10, to=10, by=.5)
+y <- quad(x,b=1)
+plot(x,y)
+```
+
+When parameters a and c are set to 0, we see a positive linear graph with negative x-interceipt and negative y-intercept.
+
+##a=1, b=0, c=0
+
+```{r}
+x <- seq(from=-10, to=10, by=.5)
+y <- quad(x,a=1)
+plot(x,y)
+```
+
+When parameters b and c are set to 0, we see a quadrative graph with a vertice at (0,0)
