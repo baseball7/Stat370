@@ -1,0 +1,64 @@
+---
+title: "Homework2"
+output: html_document
+---
+
+Parvin Siva
+
+```{r}
+data1 <- read.csv("2014_Homicides_and_Shootings.csv", header = T)
+```
+
+## Homocides and Shootings in Baltimore in 2014
+
+This assignment looks at the homocides and shooting crimes in the city of Baltimore in 2014. Data was taken from https://data.baltimorecity.gov/Crime/2014-Homicides-and-Shootings/qg5c-nhn4
+
+Data was downloaded as a csv file and read into RStudio using the read.csv command. 
+
+```{r}
+
+```
+
+## Data display
+
+Variables in data: 
+
+```{r}
+
+
+ 
+head(data1)
+
+
+
+```
+
+
+
+## Frequency of crime based on weapon
+
+```{r}
+
+plot(data1$Weapon)
+```
+
+It appears that firearms are the most common when commiting a homocide/shooting.
+
+##Frequency by District
+
+```{r}
+plot(data1$District)
+
+
+```
+
+
+
+##Frequency by neighbourhood
+
+```{r}
+plot(data1$Neighborhood)
+```
+
+Highest frequency is in Abell neighbourhood
+
